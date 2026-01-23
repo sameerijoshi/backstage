@@ -2,38 +2,17 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: sample
-  annotations:
-    backstage.io/source-location: file:../../templates/sample
-
+  title: Sample Template
+  description: Example scaffolder template
 spec:
-  owner: user:default/guest
+  owner: your-team
   type: service
-
   parameters:
-    - title: Service Information
-      required:
-        - name
-      properties:
-        name:
-          title: Name
-          type: string
-        description:
-          title: Description
-          type: string
-
+    - title: Name
+      type: string
+      required: true
   steps:
-    - id: fetch-base
-      name: Fetch Skeleton
+    - id: fetch
       action: fetch:template
       input:
         url: ./skeleton
-        values:
-          name: ${{ parameters.name }}
-          description: ${{ parameters.description }}
-
-    - id: register
-      name: Register in Catalog
-      action: catalog:register
-      input:
-        repoContentsUrl: ${{ steps.fetch-base.output.repoContentsUrl }}
-        catalogInfoPath: skeleton/catalog-info.yaml
