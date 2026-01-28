@@ -5,11 +5,12 @@ metadata:
   title: Sample Service Template
   description: Example scaffolder template
 spec:
-  owner: group:default/admins   # must exist in your catalog
+  owner: group:default/admins
   type: service
 
   parameters:
-    - title: Service Name
+    - name: serviceName
+      title: Service Name
       description: Unique name for the new service
       type: string
       required: true
@@ -19,7 +20,7 @@ spec:
       name: Fetch skeleton
       action: fetch:template
       input:
-        url: ./skeleton
+        url: https://github.com/sameerijoshi/backstage/blob/main/templates/sample/skeleton
         values:
           name: ${{ parameters.serviceName }}
 
@@ -27,7 +28,7 @@ spec:
       name: Publish to GitHub
       action: publish:github
       input:
-        repoUrl: github.com?repo=${{ parameters.serviceName }}
+        repoUrl: github.com?owner=sameerijoshi&repo=${{ parameters.serviceName }}
         description: "Generated from sample template"
 
     - id: register
